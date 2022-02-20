@@ -12,9 +12,12 @@ import os
 def check_dir(target_dir):
     """Checks the existence of the target directory and offers to create the directory if it does not exist."""
     all_dirs = os.listdir(os.getcwd())
-    all_dirs.append(os.getcwd())
-    #fix this
-    if target_dir in all_dirs:
+    #current_dir = os.getcwd().split("/")
+    #all_dirs = all_dirs.append(current_dir(-1))
+    print(all_dirs)
+    if target_dir == allall_dirs(-1):
+        return None
+    elif target_dir in all_dirs:
         change_dir(target_dir)
     else:
         create_dir_val = create_dir(target_dir)
@@ -104,3 +107,4 @@ while True:
     with open(target_file) as f:
         contents = f.read()
         print(contents)
+
