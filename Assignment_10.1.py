@@ -16,7 +16,9 @@ def check_dir(target_dir):
     if target_dir in all_dirs:
         change_dir(target_dir)
     else:
-        create_dir(target_dir)
+        create_dir_val = create_dir(target_dir)
+        if create_dir_val:
+            return 'continue'
 
 def create_dir(target_dir):
     """Creates a directory if check_dir determines it does not exist"""
@@ -52,6 +54,7 @@ def check_file(target_file):
     """Checks the existence of the file and alerts the user if a file already exists with that name"""
     green_light = True
     while green_light == True:
+        all_content = os.listdir(os.getcwd())
         if target_file in all_content:
             user_input = input(f"That file may already exist, would you like to override the file? y/n \n")
             if user_input.lower() == "y":
@@ -62,20 +65,33 @@ def check_file(target_file):
                 return "continue"
             else:
                 print("That is not a valid response.")
-    else:
-        return
+        else:
+            return None
 
-
+def gather_input():
+    user_name = input(f"What is the user's name?\n")
+    user_address = input(f"What is the user's address?\n")
+    user_phone_num = input(f"What is the user's phone number?\n")
+    user_data = user_name + ',' + user_address + ',' + user_phone_num
+    return user_data
 
 while True:
     print("Welcome to Assignment 10.1")
-    target_dir = input("What directory would you like to save the file in? ")
+    target_dir = input(f"What directory would you like to save the file in? \nType q to exit \n")
+    if target_dir.lower() == "q":
+        break
     check_dir_val = check_dir(target_dir)
     if check_dir_val:
+        print()
         continue
 
-    target_file = input("What would you like to name the file? ")
+    target_file = input("What would you like to name the file? \nType q to exit \n")
+    if target_file.lower() == 'q':
+        break
     check_file_val = check_file(target_file)
     if check_file_val:
+        print()
         continue
     
+    user_data = gather_input()
+    #print(user_data)
