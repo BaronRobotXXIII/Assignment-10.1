@@ -13,6 +13,7 @@ def check_dir(target_dir):
     """Checks the existence of the target directory and offers to create the directory if it does not exist."""
     all_dirs = os.listdir(os.getcwd())
     all_dirs.append(os.getcwd())
+    #fix this
     if target_dir in all_dirs:
         change_dir(target_dir)
     else:
@@ -86,7 +87,8 @@ while True:
         continue
 
     target_file = input("What would you like to name the file? \nType q to exit \n")
-    if target_file.lower() == 'q':
+    target_file = target_file + '.txt'
+    if target_file.lower() == 'q.txt':
         break
     check_file_val = check_file(target_file)
     if check_file_val:
@@ -95,3 +97,10 @@ while True:
     
     user_data = gather_input()
     #print(user_data)
+
+    with open(target_file, 'w') as f:
+        f.write(user_data)
+
+    with open(target_file) as f:
+        contents = f.read()
+        print(contents)
