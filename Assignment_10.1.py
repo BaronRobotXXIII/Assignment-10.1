@@ -1,3 +1,6 @@
+#Author: Michael Speer
+#Created on: 02/20/2022
+
 #This week we will create a program that performs file processing activities.  
 #Your program this week will use the OS library in order to validate that a directory exists before creating a file in that directory.  
 #Your program will prompt the user for the directory they would like to save the file in as well as the name of the file.  
@@ -12,14 +15,16 @@ import os
 def check_dir(target_dir):
     """Checks the existence of the target directory and offers to create the directory if it does not exist."""
     all_dirs = os.listdir(os.getcwd())
-    all_dirs.append(os.getcwd())
-    #fix this
-    if target_dir in all_dirs:
-        change_dir(target_dir)
+    current_dir = os.getcwd()
+    current_dir_list = current_dir.split("\\")
+    all_dirs.append(current_dir_list[-1])
+    if target_dir == all_dirs[-1]:
+        return
+    elif target_dir in all_dirs:
+        return change_dir(target_dir)
     else:
-        create_dir_val = create_dir(target_dir)
-        if create_dir_val:
-            return 'continue'
+        return create_dir(target_dir)
+
 
 def create_dir(target_dir):
     """Creates a directory if check_dir determines it does not exist"""
@@ -45,9 +50,10 @@ def change_dir(target_dir):
         if target_dir in all_content:
             try: 
                 os.chdir(target_dir)
+                return None
             except:
                 print("The target_dir might exist as a file")
-                pass
+                return None
     else:
         return None
 
@@ -83,7 +89,6 @@ while True:
         break
     check_dir_val = check_dir(target_dir)
     if check_dir_val:
-        print()
         continue
 
     target_file = input("What would you like to name the file? \nType q to exit \n")
@@ -104,3 +109,4 @@ while True:
     with open(target_file) as f:
         contents = f.read()
         print(contents)
+
